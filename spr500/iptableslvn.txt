@@ -1,0 +1,132 @@
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+11870 1943K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    2    95 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+ 5950  445K INPUT_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 5950  445K INPUT_ZONES_SOURCE  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 5950  445K INPUT_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+ 5922  443K REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  784 1190K DOCKER-ISOLATION  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+  279 23594 DOCKER     all  --  *      spr500  0.0.0.0/0            0.0.0.0/0           
+  182 15446 ACCEPT     all  --  *      spr500  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+  149 12477 ACCEPT     all  --  spr500 !spr500  0.0.0.0/0            0.0.0.0/0           
+    2   168 ACCEPT     all  --  spr500 spr500  0.0.0.0/0            0.0.0.0/0           
+    0     0 DOCKER     all  --  *      docker_gwbridge  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      docker_gwbridge  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ACCEPT     all  --  docker_gwbridge !docker_gwbridge  0.0.0.0/0            0.0.0.0/0           
+  168 1142K DOCKER     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0           
+  168 1142K ACCEPT     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+  188 12475 ACCEPT     all  --  docker0 !docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  docker0 docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 FORWARD_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 FORWARD_IN_ZONES_SOURCE  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 FORWARD_IN_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 FORWARD_OUT_ZONES_SOURCE  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 FORWARD_OUT_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+    0     0 DROP       all  --  docker_gwbridge docker_gwbridge  0.0.0.0/0            0.0.0.0/0           
+
+Chain OUTPUT (policy ACCEPT 11715 packets, 1056K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+17039 1872K OUTPUT_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain DOCKER (3 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain DOCKER-ISOLATION (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  docker_gwbridge spr500  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  spr500 docker_gwbridge  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  docker0 spr500  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  spr500 docker0  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  docker0 docker_gwbridge  0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  docker_gwbridge docker0  0.0.0.0/0            0.0.0.0/0           
+  784 1190K RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD_IN_ZONES (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 FWDI_public  all  --  eno1:1 *       0.0.0.0/0            0.0.0.0/0           [goto] 
+   95  7980 FWDI_public  all  --  +      *       0.0.0.0/0            0.0.0.0/0           [goto] 
+
+Chain FORWARD_IN_ZONES_SOURCE (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD_OUT_ZONES (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 FWDO_public  all  --  *      eno1:1  0.0.0.0/0            0.0.0.0/0           [goto] 
+    0     0 FWDO_public  all  --  *      +       0.0.0.0/0            0.0.0.0/0           [goto] 
+
+Chain FORWARD_OUT_ZONES_SOURCE (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD_direct (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDI_public (2 references)
+ pkts bytes target     prot opt in     out     source               destination         
+   95  7980 FWDI_public_log  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 FWDI_public_deny  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 FWDI_public_allow  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   95  7980 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FWDI_public_allow (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDI_public_deny (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDI_public_log (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDO_public (2 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 FWDO_public_log  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 FWDO_public_deny  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 FWDO_public_allow  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FWDO_public_allow (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDO_public_deny (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FWDO_public_log (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain INPUT_ZONES (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 IN_public  all  --  eno1:1 *       0.0.0.0/0            0.0.0.0/0           [goto] 
+ 5950  445K IN_public  all  --  +      *       0.0.0.0/0            0.0.0.0/0           [goto] 
+
+Chain INPUT_ZONES_SOURCE (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain INPUT_direct (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain IN_public (2 references)
+ pkts bytes target     prot opt in     out     source               destination         
+ 5950  445K IN_public_log  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 5950  445K IN_public_deny  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 5950  445K IN_public_allow  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+   28  2160 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain IN_public_allow (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22 ctstate NEW
+
+Chain IN_public_deny (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain IN_public_log (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT_direct (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
