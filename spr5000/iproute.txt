@@ -1,0 +1,7 @@
+default via 10.40.84.1 dev eno1 
+10.40.84.0/24 dev eno1 proto kernel scope link src 10.40.84.129 
+172.16.10.0/24 dev eno1 proto kernel scope link src 172.16.10.1 
+172.16.26.0/24 dev eno1 scope link 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 
+192.168.10.0/24 dev spr00 proto kernel scope link src 192.168.10.1 
+192.168.26.0/24 via 172.16.26.1 dev eno1 
