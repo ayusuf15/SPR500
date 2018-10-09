@@ -1,0 +1,9 @@
+$TTL 1D
+@ SOA rns.ifs.net. root.ifs.net. (
+                                   20160930 1D 1D 1D 1H)
+	IN	NS	rns.ifs.net.
+rns.ifs.net.	IN	A 	192.168.99.253
+
+ayusuf.net IN NS ayusuf15.ayusuf.net.
+ayusuf15.ayusuf.net. IN A 192.168.26.16
+16.26.192.in-addr.arpa. IN NS ayusuf15.ayusuf.net.
